@@ -17,11 +17,11 @@ function createColumn(Tile, startTile, targetTile){
     //normal tiles, no text
     if(isTargetTile) tileType = 'btn-info';
     if(!isStartTile) {
-        return '<button type="button" class="btn ' + tileType + ' m-' + margin + ' p-' + Tile.size + '">&nbsp;&nbsp;&nbsp;</button>';
+        return '<button type="button" class="btn ' + tileType + ' m-' + margin + ' p-' + Tile.size + '" id="' + Tile.x + Tile.y + '">&nbsp;&nbsp;&nbsp;</button>';
     }
     //only for start tile show content
     if(isStartTile) tileType = 'btn-primary';
-    return '<button type="button" class="btn ' + tileType + ' m-' + margin + ' p-' + Tile.size + '">You</button>';
+    return '<button type="button" class="btn ' + tileType + ' m-' + margin + ' p-' + Tile.size + '" id="' + Tile.x + Tile.y + '">You</button>';
 }
 
 function drawTile(tileColumn, startTile, targetTile){
