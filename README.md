@@ -7,3 +7,4 @@ The Map is build randomly and every tile has a random number of connections to a
 Good Luck.
 
 ![Starting Point](/example.png?raw=true "Starting Point")
+![Exploring](/example2.png?raw=true "Exploring")
