@@ -10,7 +10,7 @@ function createMap(){
 }
 
 function showPathFromTile(gameMap, xLocation, yLocation){
-    //get connections of tile from gameMap
+    //get connections of tile from gameMap    
     var connections = gameMap.tiles[xLocation][yLocation].countConnections;
     //calculate random connection to neighboring tiles
     //0 - North, 1 - East, 2 - South, 3 - West
@@ -37,7 +37,8 @@ function showPathFromTile(gameMap, xLocation, yLocation){
                 break;
         }
         //show Room by changing classes, concat two numbers as string
-        replaceButtonClassLightWithPrimary('' + x + y);
+        //test if x and y are out of bounds
+        if(x >= 0 && y >= 0) replaceButtonClassLightWithPrimary('' + x + y);
         //set showRoom for next iteration
         if((showRoom + 1 * clockWise) > 3 || (showRoom + 1 * clockWise) < 0){
             showRoom = 0;
@@ -48,7 +49,6 @@ function showPathFromTile(gameMap, xLocation, yLocation){
 }
 
 function replaceButtonClassLightWithPrimary(xyLocation){
-    console.log(xyLocation);
     if($('#'+xyLocation).hasClass('btn-light')){
         $('#'+xyLocation).removeClass('btn-light');
         $('#'+xyLocation).addClass('btn-primary');
@@ -90,4 +90,12 @@ $(document).ready(function() {
     }
     //process starttile
     showPathFromTile(gameMap, gameMap.startTile[0], gameMap.startTile[1]);
+
+    $(".btn").click(function() {
+        if($(this).hasClass('btn-primary')){
+            var id = $(this).attr('id');
+            console.log(id);
+            showPathFromTile(gameMap, parseInt(id.charAt(0)), parseInt(id.charAt(1)));
+        }
+    });
 });
