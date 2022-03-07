@@ -5,3 +5,5 @@ Find your way from your starting location to the exit. You can only open new roo
 The Map is build randomly and every tile has a random number of connections to adjacent tiles.
 
 Good Luck.
+
+![Starting Point](/example.png?raw=true "Starting Point")
