@@ -1,4 +1,4 @@
-# pathfinder
+# Pathfinder
 This is a little game build from scratch using only jquery and bootstrap. 
 
 Find your way from your starting location to the exit. You can only open new rooms adjacent to already visited rooms.
