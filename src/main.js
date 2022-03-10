@@ -38,7 +38,9 @@ function showPathFromTile(gameMap, xLocation, yLocation){
         }
         //show Room by changing classes, concat two numbers as string
         //test if x and y are out of bounds
-        if(x >= 0 && y >= 0) replaceButtonClassLightWithPrimary('' + x + y);
+        var fromClass = 'light';
+        var toClass = 'info';
+        if(x >= 0 && y >= 0) replaceButtonClassFromTo('' + x + y, fromClass, toClass);
         //set showRoom for next iteration
         if((showRoom + 1 * clockWise) > 3 || (showRoom + 1 * clockWise) < 0){
             showRoom = 0;
@@ -48,10 +50,10 @@ function showPathFromTile(gameMap, xLocation, yLocation){
     }
 }
 
-function replaceButtonClassLightWithPrimary(xyLocation){
-    if($('#'+xyLocation).hasClass('btn-light')){
-        $('#'+xyLocation).removeClass('btn-light');
-        $('#'+xyLocation).addClass('btn-primary');
+function replaceButtonClassFromTo(xyLocation, from, to){
+    if($('#'+xyLocation).hasClass('btn-'+from)){
+        $('#'+xyLocation).removeClass('btn-'+from);
+        $('#'+xyLocation).addClass('btn-'+to);
     }    
 }
 
@@ -62,7 +64,7 @@ function createColumn(Tile, startTile, targetTile){
     var isTargetTile = Tile.x == targetTile[0] && Tile.y == targetTile[1];
     var margin = Math.abs(Tile.size-3);
     //normal tiles, no text
-    if(isTargetTile) tileType = 'btn-info';
+    if(isTargetTile) tileType = 'btn-warning';
     if(!isStartTile) {
         return '<button type="button" class="btn ' + tileType + ' m-' + margin + ' p-' + Tile.size + '" id="' + Tile.x + Tile.y + '">&nbsp;&nbsp;&nbsp;</button>';
     }
@@ -92,10 +94,13 @@ $(document).ready(function() {
     showPathFromTile(gameMap, gameMap.startTile[0], gameMap.startTile[1]);
 
     $(".btn").click(function() {
-        if($(this).hasClass('btn-primary')){
+        if($(this).hasClass('btn-info')){
             var id = $(this).attr('id');
-            console.log(id);
             showPathFromTile(gameMap, parseInt(id.charAt(0)), parseInt(id.charAt(1)));
+            //change color for visited tile
+            var fromClass = 'info';
+            var toClass = 'primary';
+            replaceButtonClassFromTo(id, fromClass, toClass);
         }
     });
 });
