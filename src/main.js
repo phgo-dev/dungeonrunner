@@ -70,7 +70,7 @@ function createColumn(Tile, startTile, targetTile){
     }
     //only for start tile show content
     if(isStartTile) tileType = 'btn-primary';
-    return '<button type="button" class="btn ' + tileType + ' m-' + margin + ' p-' + Tile.size + '" id="' + Tile.x + Tile.y + '">You</button>';
+    return '<button type="button" class="btn ' + tileType + ' m-' + margin + ' p-' + Tile.size + '" id="' + Tile.x + Tile.y + '">Start</button>';
 }
 
 function drawTile(tileColumn, startTile, targetTile){
@@ -81,6 +81,28 @@ function drawTile(tileColumn, startTile, targetTile){
     string = string +  '</div>';
     string = '<div class="row">' + string + '</div>';
     $('#container').append(string);
+}
+
+function isExitTile(id, gameMap){
+    if(parseInt(id.charAt(0)) == gameMap.targetTile[0] && parseInt(id.charAt(1)) == gameMap.targetTile[1]){
+        return true;
+    }
+    return false;    
+}
+
+function isAccesible(id){
+    //check all 4 adjacent tiles if there already visited, then button class is primary
+    var x = parseInt(id.charAt(0));
+    var y = parseInt(id.charAt(1));    
+    var idNorth = '' + x + (y+1);
+    var idEast = '' + (x+1) + y;
+    var idSouth = '' + x + (y-1);
+    var idWest = '' + (x-1) + y;
+    if($('#'+idNorth).hasClass('btn-primary')) return true;
+    if($('#'+idEast).hasClass('btn-primary')) return true;
+    if($('#'+idSouth).hasClass('btn-primary')) return true;
+    if($('#'+idWest).hasClass('btn-primary')) return true;
+    return false;
 }
 
 $(document).ready(function() {
@@ -94,13 +116,21 @@ $(document).ready(function() {
     showPathFromTile(gameMap, gameMap.startTile[0], gameMap.startTile[1]);
 
     $(".btn").click(function() {
+        var id = $(this).attr('id');
+        //tile is accessible
         if($(this).hasClass('btn-info')){
-            var id = $(this).attr('id');
+            console.log(id, gameMap.targetTile);
             showPathFromTile(gameMap, parseInt(id.charAt(0)), parseInt(id.charAt(1)));
             //change color for visited tile
             var fromClass = 'info';
             var toClass = 'primary';
             replaceButtonClassFromTo(id, fromClass, toClass);
+        }
+        //tile is exit
+        if($(this).hasClass('btn-warning')){
+            if(isExitTile(id, gameMap) && isAccesible(id)){
+                $(this).html('Exit');
+            }
         }
     });
 });
